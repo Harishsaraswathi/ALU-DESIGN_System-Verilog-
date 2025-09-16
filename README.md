@@ -189,8 +189,8 @@ endmodule
 ### Simulation Output
 
 The simulation is carried out using ModelSim 2020.1.
+![WhatsApp Image 2025-09-16 at 11 08 05_0d4cc8bb](https://github.com/user-attachments/assets/026cfc5c-b21f-4d16-ac4f-ac1475914473)
 
-(Insert waveform screenshot here after running simulation in ModelSim)
 
 ---
 
