@@ -95,18 +95,18 @@ typedef enum logic [2:0]
   AND_OP = 3'b010,
   OR_OP  = 3'b011,
   XOR_OP = 3'b100,
-  SLT    = 3'b101   // Less Than
+  SLT    = 3'b101   /
 } alu_ops;
 module alu #(  parameter WIDTH = 8)
 (
   input  		logic [WIDTH-1:0] a, b,
-  input  		alu_ops         op,    // enum operation
+  input  		alu_ops         op,    
   output 	logic [WIDTH-1:0] result,
-  output 	logic    zero,  // flag: result == 0
-  output 	logic    carry   // carry/borrow flag
+  output 	logic    zero,  
+  output 	logic    carry   
 );
 
-  logic [WIDTH:0] temp; // to capture carry
+  logic [WIDTH:0] temp; 
 
   always_comb 
 begin
@@ -123,7 +123,7 @@ case (op)
       SUB: begin
         temp   = a - b;
         result = temp[WIDTH-1:0];
-        carry  = temp[WIDTH];  // borrow out
+        carry  = temp[WIDTH];  
       end
 
       AND_OP: result = a & b;
@@ -142,8 +142,6 @@ module tb_alu;
   alu_ops        op;
   logic [WIDTH-1:0] result;
   logic zero, carry;
-
-  // DUT
   alu #(WIDTH) dut (    .a(a), .b(b), .op(op), .result(result), .zero(zero), .carry(carry)  );
 initial begin
     $display("Time\t A\t B\t Operation\t Result\t Carry\t Zero");
