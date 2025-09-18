@@ -136,6 +136,8 @@ case (op)
   end
 assign zero = (result == 0);
 endmodule
+
+```
 module tb_alu;
   parameter WIDTH = 8;
   logic [WIDTH-1:0] a, b;
@@ -160,7 +162,6 @@ initial begin
   end
 endmodule
 
-```
 ---
 
 ### Simulation Output
