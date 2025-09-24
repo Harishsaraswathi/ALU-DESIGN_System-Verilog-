@@ -82,12 +82,11 @@ Common ALU operations included in this design are:
 9. **Save Results**  
    - Save the waveform (`.wlf` file) for documentation.  
 
----
-
 ## SystemVerilog Code  
 
 ### ALU Design (`alu_enum.sv`)
-```
+
+```systemverilog
 typedef enum logic [2:0] 
 {
   ADD = 3'b000,
@@ -95,18 +94,19 @@ typedef enum logic [2:0]
   AND_OP = 3'b010,
   OR_OP  = 3'b011,
   XOR_OP = 3'b100,
-  SLT    = 3'b101   /
+  SLT    = 3'b101   // Less Than
 } alu_ops;
+
 module alu #(  parameter WIDTH = 8)
 (
-  input  		logic [WIDTH-1:0] a, b,
-  input  		alu_ops         op,    
+  input  	logic [WIDTH-1:0] a, b,
+  input  	alu_ops         op,    // enum operation
   output 	logic [WIDTH-1:0] result,
-  output 	logic    zero,  
-  output 	logic    carry   
+  output 	logic    zero,  // flag: result == 0
+  output 	logic    carry   // carry/borrow flag
 );
 
-  logic [WIDTH:0] temp; 
+  logic [WIDTH:0] temp; // to capture carry
 
   always_comb 
 begin
@@ -123,7 +123,7 @@ case (op)
       SUB: begin
         temp   = a - b;
         result = temp[WIDTH-1:0];
-        carry  = temp[WIDTH];  
+        carry  = temp[WIDTH];  // borrow out
       end
 
       AND_OP: result = a & b;
@@ -138,12 +138,29 @@ assign zero = (result == 0);
 endmodule
 
 ```
+---
+
+### ALU Testbench (`alu_tb.sv`)
+
+```systemverilog
+typedef enum logic [2:0] 
+{
+  ADD = 3'b000,
+  SUB = 3'b001,
+  AND_OP = 3'b010,
+  OR_OP  = 3'b011,
+  XOR_OP = 3'b100,
+  SLT    = 3'b101   // Less Than
+} alu_ops;
+
 module tb_alu;
   parameter WIDTH = 8;
   logic [WIDTH-1:0] a, b;
   alu_ops        op;
   logic [WIDTH-1:0] result;
   logic zero, carry;
+
+  // DUT
   alu #(WIDTH) dut (    .a(a), .b(b), .op(op), .result(result), .zero(zero), .carry(carry)  );
 initial begin
     $display("Time\t A\t B\t Operation\t Result\t Carry\t Zero");
@@ -162,8 +179,8 @@ initial begin
   end
 endmodule
 
+```
 ---
-
 ### Simulation Output
 
 The simulation is carried out using ModelSim 2020.1.
